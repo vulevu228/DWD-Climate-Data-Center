@@ -7,6 +7,9 @@ data/*.parquet
 # --- scheduled-run logs ---
 logs/
 
+# --- local notes on how to reach the DWD server, not needed on GitHub ---
+API_ACCESS.txt
+
 # --- python junk ---
 __pycache__/
 *.pyc

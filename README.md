@@ -34,7 +34,7 @@ DWD-Climate-Data-Center/
   fetch_dwd_climate.py     # CLI-Einstieg - das Skript, das man aufruft
   run_daily.bat            # taeglicher Lauf ueber Windows Task Scheduler
   requirements.txt
-  API_ACCESS.txt           # genaue Anleitung: wie man an die Rohdaten kommt
+  API_ACCESS.txt           # genaue Anleitung: wie man an die Rohdaten kommt, git-ignoriert
   dwt-weather-data.pbix    # der fertige Power-BI-Report (liegt in Git LFS, siehe unten)
   docs/                     # Screenshots fuer dieses README
   .gitignore

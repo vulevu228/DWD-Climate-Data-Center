@@ -1,0 +1,286 @@
+table kl
+	lineageTag: 3110187b-0a22-4b95-8875-bd2b5aa38df4
+
+	measure 'Average Temperature (C)' = AVERAGE(kl[Mean Temperature])
+		formatString: #,##0.0
+		lineageTag: a4c594ad-1de4-4980-90ff-3615ea9807d9
+
+	measure 'Average Daily High (C)' = AVERAGE(kl[Max Temperature])
+		formatString: #,##0.0
+		lineageTag: 6f3b9a34-3eb7-4ffd-9659-9a12506670a2
+
+	measure 'Average Daily Low (C)' = AVERAGE(kl[Min Temperature])
+		formatString: #,##0.0
+		lineageTag: e9c2c995-23f4-43e7-8a98-2943df92d545
+
+	measure 'Record High (C)' = MAX(kl[Max Temperature])
+		formatString: #,##0.0
+		lineageTag: d56edc86-696b-4e5f-868d-2ba716e7fbf4
+
+	measure 'Record Low (C)' = MIN(kl[Min Temperature])
+		formatString: #,##0.0
+		lineageTag: fd697c4e-c7bc-47b3-ba14-fed7e38cec84
+
+	measure 'Average Daily Precipitation (mm)' = AVERAGE(kl[Precipitation])
+		formatString: #,##0.00
+		lineageTag: 94ef08b1-b901-4008-8d82-a7e9f9112f31
+
+	measure 'Average Daily Sunshine Duration (h)' = AVERAGE(kl[Sunshine Duration])
+		formatString: #,##0.0
+		lineageTag: 89862c84-78f0-427a-8b63-b93aabe5dc91
+
+	measure 'Average Wind Speed (m/s)' = AVERAGE(kl[Mean Wind Speed])
+		formatString: #,##0.0
+		lineageTag: 0c49b4de-29d5-43be-8455-1a61092e7c27
+
+	measure 'Max Wind Gust (m/s)' = MAX(kl[Max Wind Gust])
+		formatString: #,##0.0
+		lineageTag: 04da4a11-7484-4e15-8ac9-f7832aba9ed4
+
+	measure 'Average Air Pressure (hPa)' = AVERAGE(kl[Air Pressure])
+		formatString: #,##0.0
+		lineageTag: 428b8b18-39c1-48fb-b282-f81768fea160
+
+	measure 'Average Relative Humidity (%)' = AVERAGE(kl[Relative Humidity])
+		formatString: #,##0.0
+		lineageTag: d41d1685-7e0b-494f-89b4-ca2f932010b0
+
+	measure 'Station Count' = DISTINCTCOUNT(kl[station_id])
+		formatString: #,##0
+		lineageTag: 32568294-a5d1-45aa-aacf-a6284b72da6b
+
+	measure 'Average Cloud Cover (oktas)' = AVERAGEX(FILTER(kl, kl[Cloud Cover] <= 8), kl[Cloud Cover])
+		formatString: #,##0.0
+		lineageTag: 88d7e8a5-3d2d-457c-952b-cdae625a221f
+
+	measure 'Average Snow Depth (cm)' = AVERAGE(kl[Snow Depth])
+		formatString: #,##0.0
+		lineageTag: 2f858ca3-0b24-4d81-a883-1147881f804a
+
+	measure 'Average Vapor Pressure (hPa)' = AVERAGE(kl[Vapor Pressure])
+		formatString: #,##0.0
+		lineageTag: c3ec2916-c2ff-4403-89ae-827f9acb73c3
+
+	column station_id
+		dataType: string
+		lineageTag: ee456b18-59d0-42a3-b0f3-57c311230180
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 24a58e02-07bc-411f-ac06-9a29fadd96a5
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 6e17df76-32ed-4930-b57e-5f6b38c28692
+			defaultHierarchy: LocalDateTable_1f8dbaf8-3827-407e-9976-d65285ce6c24.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Max Wind Gust'
+		dataType: double
+		lineageTag: fcae9ba1-1ac2-418e-a32c-476c21d0164c
+		summarizeBy: max
+		sourceColumn: Max Wind Gust
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Mean Wind Speed'
+		dataType: double
+		lineageTag: 71c01a90-397d-429b-bb97-ff2e81b349db
+		summarizeBy: average
+		sourceColumn: Mean Wind Speed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Precipitation
+		dataType: double
+		formatString: 0.00
+		lineageTag: 82b2dac7-c058-469a-9fe7-8e7c0be539bb
+		summarizeBy: sum
+		sourceColumn: Precipitation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Precipitation Type'
+		dataType: int64
+		formatString: 0
+		lineageTag: f0d26fe1-1b15-4ffa-b34a-81c5f2bf8e69
+		summarizeBy: none
+		sourceColumn: Precipitation Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sunshine Duration'
+		dataType: double
+		lineageTag: 4d23fe4a-4042-4956-ac58-7e74b1c2c1e0
+		summarizeBy: sum
+		sourceColumn: Sunshine Duration
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Snow Depth'
+		dataType: int64
+		formatString: 0
+		lineageTag: 46571df7-9c98-47bb-a5a6-906b986c6a2f
+		summarizeBy: average
+		sourceColumn: Snow Depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cloud Cover'
+		dataType: double
+		lineageTag: 1addbf00-eb94-45c5-a0d9-0deb2f96de80
+		summarizeBy: average
+		sourceColumn: Cloud Cover
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Vapor Pressure'
+		dataType: double
+		lineageTag: 532f1c9a-ae45-4563-854f-898100189035
+		summarizeBy: average
+		sourceColumn: Vapor Pressure
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Air Pressure'
+		dataType: double
+		lineageTag: ac9ad79e-b672-4572-9b25-cd2aeca847e4
+		summarizeBy: average
+		sourceColumn: Air Pressure
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Mean Temperature'
+		dataType: double
+		lineageTag: f9ee183f-13b8-41d0-bbfe-49c3c1db6579
+		summarizeBy: average
+		sourceColumn: Mean Temperature
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Relative Humidity'
+		dataType: double
+		lineageTag: edf6c628-50e9-4b63-9703-9eb72bb094ea
+		summarizeBy: average
+		sourceColumn: Relative Humidity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Max Temperature'
+		dataType: double
+		lineageTag: 1076ba9d-b376-4957-9818-5dd7fbe4731c
+		summarizeBy: max
+		sourceColumn: Max Temperature
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Min Temperature'
+		dataType: double
+		lineageTag: ae6d1104-42cf-4c0d-9693-82fdb4d1b89e
+		summarizeBy: min
+		sourceColumn: Min Temperature
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Min Ground Temperature'
+		dataType: double
+		lineageTag: 48a743c9-b4d4-4521-a1eb-21f5c18459a9
+		summarizeBy: min
+		sourceColumn: Min Ground Temperature
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column station_name
+		dataType: string
+		lineageTag: 5a4d11eb-dca3-4ab8-b27d-159c0870b9aa
+		summarizeBy: none
+		sourceColumn: station_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: e2169aed-1c9e-4b22-b0b1-bfa47959d140
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column lat
+		dataType: double
+		lineageTag: 5c32450a-361a-4abe-8b0e-21549f10796e
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: lat
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lon
+		dataType: double
+		lineageTag: e58d2644-4031-4457-8bb4-613310ac708d
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: lon
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elevation_m
+		dataType: double
+		lineageTag: 643e8ae9-d2a4-4227-8e38-a6f19131c110
+		summarizeBy: none
+		sourceColumn: elevation_m
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition kl = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents("C:\Users\emira\Projects\GitHub-Projects\DWD-Climate-Data-Center\data\kl.parquet"), [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"date", type date}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"TMK", "Mean Temperature"}, {"TXK", "Max Temperature"}, {"TNK", "Min Temperature"}, {"TGK", "Min Ground Temperature"}, {"RSK", "Precipitation"}, {"RSKF", "Precipitation Type"}, {"SDK", "Sunshine Duration"}, {"SHK_TAG", "Snow Depth"}, {"NM", "Cloud Cover"}, {"VPM", "Vapor Pressure"}, {"PM", "Air Pressure"}, {"UPM", "Relative Humidity"}, {"FM", "Mean Wind Speed"}, {"FX", "Max Wind Gust"}, {"date", "Date"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

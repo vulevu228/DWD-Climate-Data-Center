@@ -1,0 +1,5 @@
+relationship 6e17df76-32ed-4930-b57e-5f6b38c28692
+	joinOnDateBehavior: datePartOnly
+	fromColumn: kl.Date
+	toColumn: LocalDateTable_1f8dbaf8-3827-407e-9976-d65285ce6c24.Date
+

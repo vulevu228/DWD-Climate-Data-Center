@@ -1,0 +1,94 @@
+DWD CLIMATE DATA CENTER (CDC) - HOW TO ACCESS THE DATA
+========================================================
+
+DWD (Deutscher Wetterdienst, the German national weather service) does not
+require an API key, account, or registration for this dataset. It is not a
+REST API in the usual sense - it is a plain HTTPS file server ("Open Data
+server") laid out as nested folders. You browse it with a normal web browser
+or download from it with any HTTP client (requests, curl, wget).
+
+1. BASE URL
+   -----------------------------------------------------------------
+   https://opendata.dwd.de/climate_environment/CDC/
+
+   Everything this project pulls lives under:
+   https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/
+
+2. FOLDER LAYOUT
+   -----------------------------------------------------------------
+   daily/
+     kl/                                <- general climate network (config.py)
+       KL_Tageswerte_Beschreibung_Stationen.txt   <- list of every station
+       historical/                      <- one zip per station, frozen archive
+         tageswerte_KL_00003_18510101_20201231_hist.zip
+         ...
+       recent/                          <- one zip per active station, rolling
+         tageswerte_KL_00003_akt.zip       ~500-day window, republished daily
+     more_precip/                       <- precipitation-only network (denser)
+     soil_temperature/                  <- soil temperature at 5 depths
+     water_equiv/                       <- snow depth and water equivalent
+     ...  (solar, weather_phenomena and more exist on the server but are not
+           pulled by this project. Note: solar/ uses a flat layout with no
+           historical/recent split, so it does not fit dwd_engine's mirror
+           logic unchanged - the other four all share that structure, which
+           is why they were chosen)
+
+   Other time resolutions exist as siblings of daily/ at:
+   https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/<resolution>/
+   (1_minute, 10_minutes, hourly, monthly, annual, multi_annual)
+
+3. INSIDE ONE STATION'S ZIP
+   -----------------------------------------------------------------
+   Each zip contains several files; the one this project reads is the one
+   starting with "produkt_", e.g.:
+     produkt_klima_tag_18510101_20201231_00003.txt
+   Semicolon-separated, German (Latin-1) encoding, one row per station-day,
+   missing readings coded as -999. The other files in the zip
+   (Metadaten_*.txt) describe the sensors and station history, not the
+   measurement itself - not needed here.
+
+4. HOW TO PULL ONE FILE BY HAND
+   -----------------------------------------------------------------
+   Browser:
+     paste any folder URL above straight into the address bar and click.
+
+   curl:
+     curl -O https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/tageswerte_KL_00003_18510101_20201231_hist.zip
+
+   wget (mirrors a whole folder, keeping the structure):
+     wget -r -np -nH --cut-dirs=8 -R "index.html*" ^
+       https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/daily/kl/historical/
+
+   Python:
+     import requests
+     r = requests.get(URL)
+     r.raise_for_status()
+     open("station.zip", "wb").write(r.content)
+
+   fetch_dwd_climate.py automates exactly this at scale: it reads the
+   directory listing (dwd_engine.list_dir), finds every station zip, skips
+   what's already downloaded, and parses the result into Parquet.
+
+5. RATE LIMITS / ETIQUETTE
+   -----------------------------------------------------------------
+   No published rate limit and no key to throttle by. Be a good citizen
+   anyway: dwd_engine.py sends a descriptive User-Agent and pauses briefly
+   (config.PAUSE, 0.2s) between requests. A first-time mirror of one network
+   is thousands of small files - let it run rather than parallelising hard
+   against a free government server.
+
+6. LICENCE
+   -----------------------------------------------------------------
+   "Datenlizenz Deutschland - Zero - Version 2.0" (DL-DE->Zero-2.0), see
+   https://www.dwd.de/DE/service/copyright/copyright_node.html - public
+   domain equivalent, free for any use including commercial, attribution
+   appreciated but not required.
+
+7. OPTIONAL: A WRAPPED REST API INSTEAD OF RAW FILES
+   -----------------------------------------------------------------
+   DWD's own service is file-based, as above. A well-known third-party
+   project called "Bright Sky" (https://brightsky.dev, MIT-licensed, no key
+   for reasonable use) wraps a subset of this same DWD data in a normal JSON
+   REST API - handy for a quick single-station lookup, but it does not expose
+   the full multi-decade historical archive this project needs, so it is not
+   used here. Mentioned for completeness only.

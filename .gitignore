@@ -1,0 +1,24 @@
+# --- raw downloads (multi-GB zips, re-fetched from opendata.dwd.de) ---
+raw/
+
+# --- parsed output: big and reproducible from raw/, not committed ---
+data/*.parquet
+
+# --- scheduled-run logs ---
+logs/
+
+# --- python junk ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- editor / OS junk ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Power BI temp / recovery files (keep the .pbix itself) ---
+*.pbix.tmp
+~$*

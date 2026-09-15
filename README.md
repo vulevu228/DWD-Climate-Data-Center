@@ -3,30 +3,19 @@
 Dieses Projekt holt Jahrzehnte an Wetterdaten vom **DWD** (Deutscher
 Wetterdienst) aus dem **Climate Data Center (CDC)**, seinem offenen
 Datenserver. Ein Python-Skript lädt tausende Dateien herunter, macht sie
-sauber und speichert sie als Parquet-Dateien. Aus diesen Daten ist ein
-Power-BI-Report entstanden: eine Seite im Format **1920x1080**, mit
-Jahrzehnten an Temperatur-, Niederschlags-, Wind- und Bodendaten für ganz
-Deutschland.
+sauber und speichert sie als Parquet-Dateien. Aus vier Netzwerken (`kl`,
+`more_precip`, `soil_temperature`, `water_equiv`) sind bisher **drei
+Power-BI-Reports** entstanden, je einer pro Netzwerk (Details, Aufbau und
+Screenshots jeweils in ihrem eigenen Abschnitt weiter unten):
 
-## Vorschau
+- **Klima** (`kl`) - Temperatur, Wind, Niederschlag, Luftdruck. Siehe
+  [Vergleich: Mensch-Report vs. Claude-Report](#vergleich-mensch-report-vs-claude-report).
+- **Bodentemperatur** (`soil_temperature`) - siehe
+  [Bodentemperatur-Netzwerk](#bodentemperatur-netzwerk-zweiter-report).
+- **Schneehöhe & Wasseräquivalent** (`water_equiv`) - siehe eigenen
+  Abschnitt weiter unten.
 
-Drei von Claude gebaute Power-BI-Reports, je ein Netzwerk (Details und
-Aufbau weiter unten):
-
-**Klima** (`kl` - Temperatur, Wind, Niederschlag, Luftdruck):
-
-![Klima-Report](docs/dashboard-claude-overview.png)
-
-**Bodentemperatur** (`soil_temperature` - 5 Tiefen, 491 Stationen):
-
-![Bodentemperatur-Report](docs/dashboard-soil-temperature.png)
-
-**Schneehöhe & Wasseräquivalent** (`water_equiv` - 1.121 Stationen):
-
-![Schneehöhe-Report](docs/dashboard-water-equiv.png)
-
-Der ursprüngliche, von Hand gebaute `kl`-Report steht im direkten Vergleich
-weiter unten, neben der Claude-Version.
+`more_precip` (106,8 Mio. Zeilen, ~6.100 Stationen) hat noch keinen Report.
 
 ## Layout
 

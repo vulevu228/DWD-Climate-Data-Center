@@ -17,6 +17,8 @@ Screenshots jeweils in ihrem eigenen Abschnitt weiter unten):
 
 `more_precip` (106,8 Mio. Zeilen, ~6.100 Stationen) hat noch keinen Report.
 
+![Klima-Report](docs/dashboard-claude-overview.png)
+
 ## Layout
 
 ```

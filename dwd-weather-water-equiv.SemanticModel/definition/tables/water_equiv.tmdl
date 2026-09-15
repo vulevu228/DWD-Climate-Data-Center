@@ -1,0 +1,181 @@
+table water_equiv
+	lineageTag: 60f7881e-4ee9-48a9-8454-dc43d004c377
+
+	measure 'Average Snow Depth (cm)' = AVERAGE(water_equiv[SH_TAG])
+		formatString: #,##0.0
+		lineageTag: 4d91fa91-eb55-4aa6-8404-e064d630bcd1
+
+	measure 'Max Snow Depth (cm)' = MAX(water_equiv[SH_TAG])
+		formatString: #,##0.0
+		lineageTag: 33f15380-666c-4a89-955d-82cd514c7962
+
+	measure 'Average Cored Snow Depth (cm)' = AVERAGEX(FILTER(water_equiv, water_equiv[ASH_6] <= 500), water_equiv[ASH_6])
+		formatString: #,##0.0
+		lineageTag: 75c85abc-ccde-42e8-84a7-60b1765bf954
+
+	measure 'Average Water Equivalent Total (mm)' = AVERAGE(water_equiv[WASH_6])
+		formatString: #,##0.0
+		lineageTag: 868c5ad8-722a-4a86-ac97-fdfe5974fc53
+
+	measure 'Average Water Equivalent Sample (mm)' = AVERAGE(water_equiv[WAAS_6])
+		formatString: #,##0.0
+		lineageTag: a9e7a528-ebb2-4358-bbf7-f57f2b213929
+
+	measure 'Long-Term Avg Snow Depth (cm)' = CALCULATE([Average Snow Depth (cm)], ALL('LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'))
+		formatString: #,##0.0
+		lineageTag: bee50b26-dbe3-4b21-8a01-dae3cf9cf888
+
+	measure 'Anomaly Snow Depth (cm)' =
+			VAR LatestYear = CALCULATE(MAX('LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'[Year]), ALL('LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'))
+			VAR CurrentYearAvg = CALCULATE([Average Snow Depth (cm)], 'LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'[Year] = LatestYear)
+			RETURN
+			    CurrentYearAvg - [Long-Term Avg Snow Depth (cm)]
+		formatString: +#,##0.0;-#,##0.0;0.0
+		lineageTag: b3ff3dde-7ac0-4689-8484-308823fe48a9
+
+	measure 'Long-Term Avg Water Equivalent (mm)' = CALCULATE([Average Water Equivalent Total (mm)], ALL('LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'))
+		formatString: #,##0.0
+		lineageTag: db0e4dbc-969a-496c-8d2d-a5dccf55d4fe
+
+	measure 'Anomaly Water Equivalent (mm)' =
+			VAR LatestYear = CALCULATE(MAX('LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'[Year]), ALL('LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'))
+			VAR CurrentYearAvg = CALCULATE([Average Water Equivalent Total (mm)], 'LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203'[Year] = LatestYear)
+			RETURN
+			    CurrentYearAvg - [Long-Term Avg Water Equivalent (mm)]
+		formatString: +#,##0.0;-#,##0.0;0.0
+		lineageTag: 2985f751-324e-40e2-9644-2d58367ac34a
+
+	measure 'Station Count' = DISTINCTCOUNT(water_equiv[station_id])
+		formatString: #,##0
+		lineageTag: a7217086-de9e-4c3f-a90d-89c5375b0798
+
+	column station_id
+		dataType: string
+		lineageTag: 409e1581-f1c7-409d-a6c0-5bcbd7b8235d
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8d06bfd5-0109-454a-8a2b-438cbf7c943f
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 55ea3eb6-acb6-4873-ac7d-22cafeea6864
+			defaultHierarchy: LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column QN_6
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f3bafb5-6791-4a1f-89a1-86ff64576a67
+		summarizeBy: none
+		sourceColumn: QN_6
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASH_6
+		dataType: int64
+		formatString: 0
+		lineageTag: 851f0416-6cb2-4ab6-93ff-65498c0e40df
+		summarizeBy: average
+		sourceColumn: ASH_6
+
+		annotation SummarizationSetBy = Automatic
+
+	column SH_TAG
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b452acc-10a5-464f-97d6-53db63f68199
+		summarizeBy: average
+		sourceColumn: SH_TAG
+
+		annotation SummarizationSetBy = Automatic
+
+	column WASH_6
+		dataType: double
+		lineageTag: 47f4064f-e9d0-410d-976b-fb37bbfaeb6b
+		summarizeBy: average
+		sourceColumn: WASH_6
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WAAS_6
+		dataType: double
+		lineageTag: 16a6357b-be7b-4137-98b8-841babbad792
+		summarizeBy: average
+		sourceColumn: WAAS_6
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column station_name
+		dataType: string
+		lineageTag: 2c23aa08-7bbb-4dd6-a69d-c5555853c0c3
+		summarizeBy: none
+		sourceColumn: station_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: b88280ec-2c6b-4e1c-bb79-e36c7d735823
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column lat
+		dataType: double
+		lineageTag: 5e3659ca-3bb9-447f-9206-3143d7623e47
+		summarizeBy: none
+		sourceColumn: lat
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lon
+		dataType: double
+		lineageTag: b25f481a-c03f-496d-bf54-ac2ccde07e92
+		summarizeBy: none
+		sourceColumn: lon
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elevation_m
+		dataType: double
+		lineageTag: 43fd51be-e83e-4cbb-8e05-2e1ac4e759ca
+		summarizeBy: none
+		sourceColumn: elevation_m
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition water_equiv = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents("C:\Users\emira\Projects\GitHub-Projects\DWD-Climate-Data-Center\data\water_equiv.parquet"), [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

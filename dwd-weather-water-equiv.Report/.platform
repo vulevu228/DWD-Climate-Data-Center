@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "dwd-weather-water-equiv"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "96cfa598-675a-4400-ae91-203de83aeee7"
+  }
+}

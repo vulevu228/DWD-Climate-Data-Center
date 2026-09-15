@@ -40,6 +40,9 @@ DWD-Climate-Data-Center/
   dwd-weather-soil-temperature.pbip              # zweiter Report: Bodentemperatur-Netzwerk (siehe unten)
   dwd-weather-soil-temperature.Report/
   dwd-weather-soil-temperature.SemanticModel/
+  dwd-weather-water-equiv.pbip              # dritter Report: Schneehoehe & Wasseraequivalent (siehe unten)
+  dwd-weather-water-equiv.Report/
+  dwd-weather-water-equiv.SemanticModel/
   docs/                     # Screenshots fuer dieses README
   .gitignore
   .gitattributes            # sagt Git, dass *.pbix ueber Git LFS laeuft
@@ -229,6 +232,47 @@ in den 1990ern eingestellt (danach nur noch vereinzelt fortgeführt) - im
 Diagramm sichtbar als der scharfe Abbruch der gelben Linie kurz nach 2000.
 Das ist keine fehlerhafte Datenreihe, sondern die reale Netzabdeckung laut
 DWD.
+
+## Schneehöhe & Wasseräquivalent (dritter Report)
+
+Der dritte Report: `water_equiv`, **1.121 Stationen**, Tageswerte von **1854
+bis heute**. Anders als bei Niederschlag oder Temperatur misst dieses
+Netzwerk zwei verschiedene Dinge, die leicht verwechselt werden - wie **tief**
+der Schnee liegt (`SH_TAG`, cm) und wie viel **Wasser** tatsächlich darin
+steckt (`WASH_6`, mm) - zwei Schneepacken gleicher Höhe können sehr
+unterschiedlich viel Wasser enthalten, je nachdem wie kompakt der Schnee ist.
+Genau das Wasseräquivalent ist es, was im Frühjahr die Hochwassergefahr durch
+Schneeschmelze bestimmt, nicht die Höhe allein. Eigenes Projekt:
+`dwd-weather-water-equiv.pbip` + `.Report/` + `.SemanticModel/`.
+
+![Schneehöhe-Report](docs/dashboard-water-equiv.png)
+
+Aufbau (wie bei `soil_temperature`: kompakte Kennzahlen oben, wenige grosse
+Diagramme statt vieler kleiner):
+
+- **5 Kennzahlen-Karten:** Stationsanzahl, aktuelle Schneehöhe und
+  Wasseräquivalent, sowie beider **Abweichung vom langjährigen Mittel**.
+- **Schneehöhe über die Zeit** (Hauptdiagramm) und, in einer zweiten Zeile,
+  **Wasseräquivalent über die Zeit** auf einer eigenen, separaten Skala -
+  Schneehöhe (cm) und Wasseräquivalent (mm) bewusst *nicht* im selben
+  Diagramm kombiniert, weil die Grössenordnungen zu unterschiedlich sind
+  (~3 cm vs. ~50 mm im Schnitt) und eine gemeinsame Achse die kleinere Reihe
+  optisch verschwinden liesse.
+- **Karte, Balkendiagramm (Wasseräquivalent nach Bundesland), Auswahlliste**
+  in der mittleren Zeile, plus **Maximale Schneehöhe nach Bundesland**
+  (Extremwert statt Durchschnitt) in der Zeile darunter.
+
+**Datenfehler gefunden und behoben:** Die Spalte `ASH_6` (Höhe eines
+ausgestochenen Schneeprofils) enthielt an 92 Zeilen den Wert `999` - DWDs
+"nicht gemessen"-Code, der beim Parquet-Aufbau nicht herausgefiltert wurde
+(realer Maximalwert sonst: 390 cm). Der Durchschnittswert dieser Spalte
+schliesst diese 92 Zeilen jetzt explizit aus.
+
+**Bekannte Einschränkung:** Der aktuellste Datenstand (2026) deckt nur bis
+April ab - ein "aktuelles Jahr" ist hier also nur ein Teiljahr, noch dazu
+die schneereichste Jahreshälfte. Die "Abweichung vom Mittel"-Kennzahlen
+sind darum diesen Winter/Frühling gegenüber einem echten Jahresmittel leicht
+verzerrt, bis ein volles Kalenderjahr an Daten vorliegt.
 
 ## Grenzen der Daten
 

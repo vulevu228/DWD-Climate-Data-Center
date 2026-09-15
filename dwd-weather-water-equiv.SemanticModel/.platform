@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "dwd-weather-water-equiv"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "28a19655-f945-4383-885f-44465cc3f4ea"
+  }
+}

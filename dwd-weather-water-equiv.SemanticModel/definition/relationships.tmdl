@@ -1,0 +1,5 @@
+relationship 55ea3eb6-acb6-4873-ac7d-22cafeea6864
+	joinOnDateBehavior: datePartOnly
+	fromColumn: water_equiv.date
+	toColumn: LocalDateTable_04d920c0-6c64-4977-83ac-5a481ca91203.Date
+

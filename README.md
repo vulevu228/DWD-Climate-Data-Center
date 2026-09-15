@@ -10,12 +10,10 @@ Deutschland.
 
 ## Vorschau
 
-Der Report zeigt eine Deutschlandkarte mit allen Wetterstationen, den
-Temperaturverlauf seit den Anfängen der Messung, Niederschlag und
-Sonnenschein pro Jahr, eine Tabelle mit den Monatswerten, und zwei weitere
-Diagramme zu Wind/Luftdruck und Schneehöhe.
-
-![Power-BI-Report: ganze Seite, alle Stationen](docs/dashboard-deutschland.png)
+Der Report lässt sich nach **Bundesland** und **Station** filtern. Die volle
+Übersichtsseite (alle Stationen, ungefiltert) steht weiter unten im
+[Vergleich](#vergleich-mensch-report-vs-claude-report) direkt neben der
+Claude-Version.
 
 Gefiltert auf das **Bundesland Berlin**:
 

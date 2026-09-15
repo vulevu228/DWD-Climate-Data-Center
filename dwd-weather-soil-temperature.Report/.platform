@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "dwd-weather-soil-temperature"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "71ae66f7-0cc3-4ca5-8956-ed2ec9c57d53"
+  }
+}

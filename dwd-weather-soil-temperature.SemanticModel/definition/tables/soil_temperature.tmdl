@@ -1,0 +1,192 @@
+table soil_temperature
+	lineageTag: e9102564-d8bf-4a9c-9c9b-478de7388fc7
+
+	measure 'Avg Soil Temp 2cm (C)' = AVERAGE(soil_temperature[V_TE002M])
+		formatString: #,##0.0
+		lineageTag: 78ccf0e3-144e-44bc-b0c1-f6e9133c5757
+
+	measure 'Avg Soil Temp 5cm (C)' = AVERAGE(soil_temperature[V_TE005M])
+		formatString: #,##0.0
+		lineageTag: 5093adc3-a1f0-48e0-9f90-5cf5208aa36d
+
+	measure 'Avg Soil Temp 10cm (C)' = AVERAGE(soil_temperature[V_TE010M])
+		formatString: #,##0.0
+		lineageTag: 72df9eca-9d21-48d3-9620-4a02e0b854a3
+
+	measure 'Avg Soil Temp 20cm (C)' = AVERAGE(soil_temperature[V_TE020M])
+		formatString: #,##0.0
+		lineageTag: fccd4a51-dbfc-438f-b581-5d118b0fb617
+
+	measure 'Avg Soil Temp 50cm (C)' = AVERAGE(soil_temperature[V_TE050M])
+		formatString: #,##0.0
+		lineageTag: 7fe63ffc-c13f-4e52-a0ba-462de80f37b4
+
+	measure 'Long-Term Avg 10cm (C)' = CALCULATE([Avg Soil Temp 10cm (C)], ALL('LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'))
+		formatString: #,##0.0
+		lineageTag: a1e5a6a3-a5a1-4ad9-9d0e-7b4f7b535ba1
+
+	measure 'Long-Term Avg 50cm (C)' = CALCULATE([Avg Soil Temp 50cm (C)], ALL('LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'))
+		formatString: #,##0.0
+		lineageTag: 33d1ad3e-4943-4a04-a233-0b2edeebf043
+
+	measure 'Anomaly 10cm (C)' =
+			VAR LatestYear = CALCULATE(MAX('LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'[Year]), ALL('LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'))
+			VAR CurrentYearAvg = CALCULATE([Avg Soil Temp 10cm (C)], 'LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'[Year] = LatestYear)
+			RETURN
+			    CurrentYearAvg - [Long-Term Avg 10cm (C)]
+		formatString: +#,##0.0;-#,##0.0;0.0
+		lineageTag: 07bd77c9-568d-4249-a262-a3f6de53c486
+
+	measure 'Anomaly 50cm (C)' =
+			VAR LatestYear = CALCULATE(MAX('LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'[Year]), ALL('LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'))
+			VAR CurrentYearAvg = CALCULATE([Avg Soil Temp 50cm (C)], 'LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811'[Year] = LatestYear)
+			RETURN
+			    CurrentYearAvg - [Long-Term Avg 50cm (C)]
+		formatString: +#,##0.0;-#,##0.0;0.0
+		lineageTag: ba4d7219-5d34-4343-b81e-71d7472cb294
+
+	measure 'Station Count' = DISTINCTCOUNT(soil_temperature[station_id])
+		formatString: #,##0
+		lineageTag: 118c6f97-7d88-432f-84d5-4f7e39c377ac
+
+	column station_id
+		dataType: string
+		lineageTag: 5bc97e02-c020-4d10-8afd-1ec43a7d5d28
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: eaf91c7c-169c-4c3d-9bc1-c67cfd5440c8
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: a0b9aad7-a449-4677-92b6-66805840b7ce
+			defaultHierarchy: LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column QN_2
+		dataType: int64
+		formatString: 0
+		lineageTag: c8cb4dab-b69a-41ed-a219-c0371b6f4f34
+		summarizeBy: none
+		sourceColumn: QN_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column V_TE002M
+		dataType: double
+		lineageTag: 6a3384a6-1151-4dd5-a827-a7cf02713780
+		summarizeBy: average
+		sourceColumn: V_TE002M
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column V_TE005M
+		dataType: double
+		lineageTag: 4f4746ad-414c-44e5-bc44-846eb427b090
+		summarizeBy: average
+		sourceColumn: V_TE005M
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column V_TE010M
+		dataType: double
+		lineageTag: e07f1646-5400-48d4-af77-11ac98229535
+		summarizeBy: average
+		sourceColumn: V_TE010M
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column V_TE020M
+		dataType: double
+		lineageTag: 6f03ee3c-b334-44d2-b33a-2a9e3b98aa83
+		summarizeBy: average
+		sourceColumn: V_TE020M
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column V_TE050M
+		dataType: double
+		lineageTag: 31a28153-ae1f-416e-9e59-18fa41f8b179
+		summarizeBy: average
+		sourceColumn: V_TE050M
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column station_name
+		dataType: string
+		lineageTag: 1d904000-4437-4411-87d6-9e5b4b076a69
+		summarizeBy: none
+		sourceColumn: station_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 33382895-3f07-4a3b-83ef-1fd1f705d9b7
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column lat
+		dataType: double
+		lineageTag: 083568ad-80a1-4766-a3a9-9b70a2bca3ee
+		summarizeBy: none
+		sourceColumn: lat
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column lon
+		dataType: double
+		lineageTag: 679b423d-9f5c-4186-b9d9-0ec1939862a6
+		summarizeBy: none
+		sourceColumn: lon
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elevation_m
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c875a54-c6ea-4d57-a0cb-c75c75f68799
+		summarizeBy: none
+		sourceColumn: elevation_m
+
+		annotation SummarizationSetBy = Automatic
+
+	partition soil_temperature = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents("C:\Users\emira\Projects\GitHub-Projects\DWD-Climate-Data-Center\data\soil_temperature.parquet"), [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

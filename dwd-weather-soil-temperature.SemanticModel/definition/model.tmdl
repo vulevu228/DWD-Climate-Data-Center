@@ -1,0 +1,21 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["soil_temperature"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table soil_temperature
+ref table DateTableTemplate_750ee284-2b9a-45a7-b587-a9480de402a4
+ref table LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811
+
+ref cultureInfo en-GB
+

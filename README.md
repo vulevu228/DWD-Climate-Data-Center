@@ -37,6 +37,9 @@ DWD-Climate-Data-Center/
   dwt-weather-data.pbip              # Power-BI-Projekt (textbasiert), Claude-Version - siehe Vergleich unten
   dwt-weather-data.Report/            # PBIR: Seiten, Diagramme als JSON
   dwt-weather-data.SemanticModel/     # TMDL: Tabellen, Beziehungen, DAX-Kennzahlen
+  dwd-weather-soil-temperature.pbip              # zweiter Report: Bodentemperatur-Netzwerk (siehe unten)
+  dwd-weather-soil-temperature.Report/
+  dwd-weather-soil-temperature.SemanticModel/
   docs/                     # Screenshots fuer dieses README
   .gitignore
   .gitattributes            # sagt Git, dass *.pbix ueber Git LFS laeuft
@@ -197,6 +200,35 @@ Diagrammtypen umgestellt.
 <td><img src="docs/dashboard-claude-overview.png" width="500"/></td>
 </tr>
 </table>
+
+## Bodentemperatur-Netzwerk (zweiter Report)
+
+Von den vier Netzwerken (`kl`, `more_precip`, `soil_temperature`, `water_equiv`)
+war bisher nur `kl` als Power-BI-Report ausgebaut. `soil_temperature` ist der
+zweite: **491 Stationen**, Bodentemperatur in **5 Tiefen** (2/5/10/20/50 cm),
+Tageswerte von **1949 bis heute**. Eigener Report, eigenes Projekt:
+`dwd-weather-soil-temperature.pbip` + `.Report/` + `.SemanticModel/`, komplett
+neu von Claude gebaut (nicht aus `kl` kopiert).
+
+![Bodentemperatur-Report](docs/dashboard-soil-temperature.png)
+
+Aufbau:
+
+- **5 kompakte Kennzahlen-Karten oben:** Stationsanzahl, aktuelle
+  Durchschnittstemperatur bei 10 cm und 50 cm, sowie **Abweichung vom
+  langjährigen Mittel** für beide Tiefen (letztes Jahr vs. gesamter
+  Messzeitraum) - eine Kennzahl allein ist nur eine Zahl, eine Kennzahl im
+  Vergleich zum langjährigen Mittel ist eine Aussage.
+- **Ein grosses Diagramm** statt vieler kleiner: alle 5 Tiefen als Linien
+  über die Zeit - je tiefer, desto ruhiger und phasenverschobener die Kurve.
+- **Karte, Balkendiagramm (10 cm nach Bundesland), Auswahlliste** in einer
+  sauber ausgerichteten Zeile darunter.
+
+**Bekannte Einschränkung:** Die 2-cm-Messung wurde an den meisten Stationen
+in den 1990ern eingestellt (danach nur noch vereinzelt fortgeführt) - im
+Diagramm sichtbar als der scharfe Abbruch der gelben Linie kurz nach 2000.
+Das ist keine fehlerhafte Datenreihe, sondern die reale Netzabdeckung laut
+DWD.
 
 ## Grenzen der Daten
 

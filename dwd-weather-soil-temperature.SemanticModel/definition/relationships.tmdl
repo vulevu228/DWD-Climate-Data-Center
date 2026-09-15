@@ -1,0 +1,5 @@
+relationship a0b9aad7-a449-4677-92b6-66805840b7ce
+	joinOnDateBehavior: datePartOnly
+	fromColumn: soil_temperature.date
+	toColumn: LocalDateTable_115ac9c4-66a3-4048-8df7-968c9fe27811.Date
+

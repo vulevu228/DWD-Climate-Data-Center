@@ -10,18 +10,23 @@ Deutschland.
 
 ## Vorschau
 
-Der Report lässt sich nach **Bundesland** und **Station** filtern. Die volle
-Übersichtsseite (alle Stationen, ungefiltert) steht weiter unten im
-[Vergleich](#vergleich-mensch-report-vs-claude-report) direkt neben der
-Claude-Version.
+Drei von Claude gebaute Power-BI-Reports, je ein Netzwerk (Details und
+Aufbau weiter unten):
 
-Gefiltert auf das **Bundesland Berlin**:
+**Klima** (`kl` - Temperatur, Wind, Niederschlag, Luftdruck):
 
-![Power-BI-Report: gefiltert auf Berlin](docs/dashboard-berlin.png)
+![Klima-Report](docs/dashboard-claude-overview.png)
 
-Ausschnitt der unteren Hälfte, gefiltert auf **Brandenburg**:
+**Bodentemperatur** (`soil_temperature` - 5 Tiefen, 491 Stationen):
 
-![Power-BI-Report: gefiltert auf Brandenburg](docs/dashboard-brandenburg.png)
+![Bodentemperatur-Report](docs/dashboard-soil-temperature.png)
+
+**Schneehöhe & Wasseräquivalent** (`water_equiv` - 1.121 Stationen):
+
+![Schneehöhe-Report](docs/dashboard-water-equiv.png)
+
+Der ursprüngliche, von Hand gebaute `kl`-Report steht im direkten Vergleich
+weiter unten, neben der Claude-Version.
 
 ## Layout
 

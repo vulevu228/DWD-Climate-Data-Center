@@ -36,6 +36,9 @@ DWD-Climate-Data-Center/
   requirements.txt
   API_ACCESS.txt           # genaue Anleitung: wie man an die Rohdaten kommt, git-ignoriert
   dwt-weather-data.pbix    # der fertige Power-BI-Report (liegt in Git LFS, siehe unten)
+  dwt-weather-data.pbip              # Power-BI-Projekt (textbasiert), Claude-Version - siehe Vergleich unten
+  dwt-weather-data.Report/            # PBIR: Seiten, Diagramme als JSON
+  dwt-weather-data.SemanticModel/     # TMDL: Tabellen, Beziehungen, DAX-Kennzahlen
   docs/                     # Screenshots fuer dieses README
   .gitignore
   .gitattributes            # sagt Git, dass *.pbix ueber Git LFS laeuft
@@ -156,6 +159,46 @@ git clone https://github.com/vulevu228/DWD-Climate-Data-Center.git
 
 Ohne Git LFS bekommt man beim Klonen nur einen kleinen Platzhalter statt der
 echten `.pbix`-Datei.
+
+## Vergleich: Mensch-Report vs. Claude-Report
+
+Der Report oben (`dwt-weather-data.pbix`) wurde von Hand in Power BI gebaut.
+Als Experiment habe ich Claude gebeten, denselben Datensatz komplett neu als
+Power-BI-Projekt (`.pbip` - textbasiert statt Binärdatei, direkt aus Git
+lesbar) zu gestalten, ohne die alten Diagramme zu kopieren. Das Ergebnis
+liegt als `dwt-weather-data.pbip` + `dwt-weather-data.Report/` +
+`dwt-weather-data.SemanticModel/` in diesem Repo, direkt neben der `.pbix`.
+
+|  | Mein Report (`.pbix`) | Claude-Report (`.pbip`) |
+| --- | --- | --- |
+| Seitengröße | 1920x1080 | 1920x3000 (mehr Platz, mehr Diagramme) |
+| Hintergrund | Hellgrau/Weiß | Dunkles Neutralgrau (`#18181B` / `#27272A`) |
+| Akzentfarben | Ein Petrol-Ton für fast alles | Vier Farben nach Bedeutung: Blau (Standard), Orange (Maximum), Cyan (Minimum), Gelb (Hervorhebung) |
+| Schrift | Constantia, oft kursiv | Segoe UI durchgehend, keine Kursivschrift |
+| Aggregation | Teilweise Summe auf Temperatur/Druck/Wind (Power-BI-Standard) | Jede Kennzahl explizit als Durchschnitt/Maximum/Minimum benannt - keine Summen-Fallen bei nicht-additiven Größen |
+| Diagramme | 14, teils überlappend | 27, exakt im Raster (8-10px Abstand), keine Überlappung |
+| Diagrammtypen | Karte, Zeitreihe, Kombi-Diagramm (Balken+Fläche), Heatmap-Tabelle, Streudiagramm | Karte, Zeitreihe, Balken, Donut, Kennzahlen-Karten, Auswahllisten |
+
+**Ehrliches Fazit:** Der Claude-Report ist auf einen Blick leichter zu lesen
+und zu überwachen - konsistente Farben nach Bedeutung statt nach Geschmack,
+gleich formatierte Titel/Untertitel auf jedem Diagramm, und ein sauberes
+Raster ohne Überlappung. Dafür fehlen ihm zwei Diagrammtypen, die mein
+Report hat: die Heatmap-Tabelle und das Streudiagramm. Die wurden bewusst
+weggelassen, nachdem eine Tabelle beim ersten Versuch den ganzen Report am
+Laden gehindert hat - Claude hat den Fehler gefunden (fehlerhafte
+Datenbindung), aber statt es erneut zu riskieren, auf robustere
+Diagrammtypen umgestellt.
+
+<table>
+<tr>
+<th>Mein Report</th>
+<th>Claude-Report</th>
+</tr>
+<tr>
+<td><img src="docs/dashboard-deutschland.png" width="500"/></td>
+<td><img src="docs/dashboard-claude-overview.png" width="500"/></td>
+</tr>
+</table>
 
 ## Grenzen der Daten
 
